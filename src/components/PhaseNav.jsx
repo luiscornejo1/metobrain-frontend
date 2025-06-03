@@ -1,13 +1,28 @@
+import { useEffect } from "react";
+
 const steps = [
-  "Alineación",
-  "Definición",
-  "Ideación",
-  "Prototipado",
-  "Lanzamiento",
+  "Planificación",
+  "Ejecución",
+  "Revisión",
+  "Retroalimentación",
+  "Cierre",
   "Resumen",
 ];
 
 export default function PhaseNav({ activeStep, setActiveStep }) {
+  // ✅ Cuando cambie el paso activo, lo guardamos en localStorage
+  useEffect(() => {
+    localStorage.setItem("activeStep", activeStep);
+  }, [activeStep]);
+
+  // ✅ Cuando el componente se monta, leemos el paso guardado
+  useEffect(() => {
+    const pasoGuardado = localStorage.getItem("activeStep");
+    if (pasoGuardado !== null) {
+      setActiveStep(parseInt(pasoGuardado));
+    }
+  }, []);
+
   return (
     <div className="flex flex-wrap justify-center gap-3 shadow-md rounded-xl bg-white p-4">
       {steps.map((step, index) => (

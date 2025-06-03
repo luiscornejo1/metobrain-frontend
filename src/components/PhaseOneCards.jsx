@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { FaHeart, FaMicrophone, FaBrain } from "react-icons/fa";
-
-
-
+import IkigaiModal from "./IkigaiModal";
+import EntrevistaModal from "./EntrevistaModal";
+import MapaEmpatiaModal from "./MapaEmpatiaModal";
 
 const cards = [
   {
@@ -21,13 +22,29 @@ const cards = [
   }
 ];
 
-export default function PhaseOneCards() {
+export default function PhaseOneCards({ proyectoId }) {
+  const [showIkigaiModal, setShowIkigaiModal] = useState(false);
+  const [showEntrevistaModal, setShowEntrevistaModal] = useState(false);
+  const [showMapaEmpatiaModal, setShowMapaEmpatiaModal] = useState(false);
+
+  const handleCardClick = (title) => {
+    if (title === "Ikigai") {
+      setShowIkigaiModal(true);
+    } else if (title === "Entrevistas") {
+      setShowEntrevistaModal(true);
+    }
+    else if (title === "Mapa de Empatía") {
+      setShowMapaEmpatiaModal(true);
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
       {cards.map((card, index) => (
         <div
           key={index}
-          className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition border-t-4 border-blue-500"
+          onClick={() => handleCardClick(card.title)}
+          className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition border-t-4 border-blue-500 cursor-pointer"
         >
           <div className="flex items-center gap-4 mb-4">
             {card.icon}
@@ -36,6 +53,27 @@ export default function PhaseOneCards() {
           <p className="text-gray-600 text-sm">{card.description}</p>
         </div>
       ))}
+
+      {showIkigaiModal && (
+        <IkigaiModal
+          proyectoId={proyectoId}
+          onClose={() => setShowIkigaiModal(false)}
+          onSaved={() => setShowIkigaiModal(false)}
+        />
+      )}
+
+      {showEntrevistaModal && (
+        <EntrevistaModal
+          proyectoId={proyectoId}
+          onClose={() => setShowEntrevistaModal(false)}
+        />
+      )}
+      {showMapaEmpatiaModal && (
+        <MapaEmpatiaModal
+          proyectoId={proyectoId}
+          onClose={() => setShowMapaEmpatiaModal(false)}
+        />
+      )}
     </div>
   );
 }
