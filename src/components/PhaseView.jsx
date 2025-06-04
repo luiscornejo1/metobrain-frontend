@@ -12,7 +12,7 @@ export default function PhaseView({ activeStep, proyectoId }) {
       {activeStep === 1 && <PhaseTwoBacklog proyectoId={proyectoId} />}
       {activeStep === 2 && <PhaseThreeIdeas proyectoId={proyectoId}/>}
       {activeStep === 3 && <PhaseFourPrototype proyectoId={proyectoId}/>}
-      {activeStep === 4 && <PhaseFiveLaunch />}
+      {activeStep === 4 && <PhaseFiveLaunch proyectoId={proyectoId}/>}
       {activeStep === 5 && <ResumenFinal />}
     </div>
   );

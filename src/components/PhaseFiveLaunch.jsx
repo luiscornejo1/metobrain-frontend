@@ -1,52 +1,81 @@
-// src/components/PhaseFiveLaunch.jsx
 import { useState } from "react";
-import { FaFlagCheckered, FaRocket } from "react-icons/fa";
+import api from "../services/api";
 
-export default function PhaseFiveLaunch() {
-  const [entregables, setEntregables] = useState([]);
-  const [nuevo, setNuevo] = useState("");
+export default function PhaseFiveLaunch({ proyectoId }) {
+  const [aceptacionCliente, setAceptacionCliente] = useState("Pendiente");
+  const [comentariosCliente, setComentariosCliente] = useState("");
+  const [leccionesAprendidas, setLeccionesAprendidas] = useState("");
+  const [enviado, setEnviado] = useState(false);
 
-  const agregarEntregable = () => {
-    if (!nuevo.trim()) return;
-    setEntregables([...entregables, { id: Date.now(), texto: nuevo }]);
-    setNuevo("");
+  const registrarCierre = async () => {
+    if (!proyectoId) return alert("No se ha definido el proyecto.");
+    try {
+      await api.post("/cierre", {
+        proyecto: { id: proyectoId },
+        aceptacionCliente,
+        comentariosCliente,
+        leccionesAprendidas,
+      });
+      setEnviado(true);
+    } catch (err) {
+      console.error("Error al registrar el cierre del proyecto:", err);
+      alert("Ocurrió un error al registrar el cierre.");
+    }
   };
 
   return (
-    <div className="mt-10 max-w-3xl mx-auto bg-white shadow p-6 rounded-xl">
-      <h2 className="text-2xl font-semibold mb-4 text-green-700 flex items-center gap-2">
-        <FaFlagCheckered /> Lanzamiento y Cierre
-      </h2>
+    <div className="max-w-3xl mx-auto bg-white p-6 mt-10 rounded-xl shadow">
+      <h2 className="text-2xl font-bold mb-4 text-green-700">🏁 Lanzamiento y Cierre</h2>
 
-      <div className="flex gap-2 mb-4">
-        <input
-          type="text"
-          placeholder="Agrega un entregable o conclusión final..."
-          className="flex-1 border px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-green-200"
-          value={nuevo}
-          onChange={(e) => setNuevo(e.target.value)}
-        />
-        <button
-          onClick={agregarEntregable}
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md"
-        >
-          <FaRocket />
-        </button>
-      </div>
+      {enviado ? (
+        <div className="text-green-700 font-semibold">
+          ✅ El cierre del proyecto ha sido registrado correctamente.
+        </div>
+      ) : (
+        <>
+          <div className="mb-4">
+            <label className="block font-medium mb-1">Aceptación del cliente/patrocinador:</label>
+            <select
+              value={aceptacionCliente}
+              onChange={(e) => setAceptacionCliente(e.target.value)}
+              className="w-full border px-3 py-2 rounded"
+            >
+              <option value="Pendiente">Pendiente</option>
+              <option value="Aceptado">Aceptado</option>
+              <option value="Rechazado">Rechazado</option>
+            </select>
+          </div>
 
-      <ul className="space-y-3">
-        {entregables.map((e) => (
-          <li
-            key={e.id}
-            className="bg-gray-50 px-4 py-2 rounded-md border border-green-300"
+          <div className="mb-4">
+            <label className="block font-medium mb-1">Comentarios del cliente:</label>
+            <textarea
+              value={comentariosCliente}
+              onChange={(e) => setComentariosCliente(e.target.value)}
+              className="w-full border px-3 py-2 rounded"
+              rows={3}
+              placeholder="Comentarios del cliente o patrocinador..."
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block font-medium mb-1">Lecciones aprendidas:</label>
+            <textarea
+              value={leccionesAprendidas}
+              onChange={(e) => setLeccionesAprendidas(e.target.value)}
+              className="w-full border px-3 py-2 rounded"
+              rows={4}
+              placeholder="¿Qué aprendió el equipo en este proyecto?"
+            />
+          </div>
+
+          <button
+            onClick={registrarCierre}
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
           >
-            {e.texto}
-          </li>
-        ))}
-        {entregables.length === 0 && (
-          <p className="text-gray-500 text-sm">No se han registrado entregables aún.</p>
-        )}
-      </ul>
+            Finalizar Proyecto
+          </button>
+        </>
+      )}
     </div>
   );
 }
