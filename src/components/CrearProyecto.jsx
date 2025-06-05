@@ -8,7 +8,7 @@ export default function CrearProyecto({ onProyectoCreado }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post("/proyectos", { nombre });
+      const res = await api.post("/api/proyectos", { nombre });
       onProyectoCreado(res.data);  // ← devuelve el proyecto con ID
       setMensaje("✅ Proyecto creado exitosamente");
     } catch (err) {
