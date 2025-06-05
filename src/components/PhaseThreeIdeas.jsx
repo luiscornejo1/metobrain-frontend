@@ -51,7 +51,8 @@ Genera una lista de ideas/funcionalidades para el Sprint Backlog, en formato: "C
         },
         {
           headers: {
-            Authorization: `Bearer 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`,
+            Authorization: `Bearer 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
+`,
             "Content-Type": "application/json",
           },
         }

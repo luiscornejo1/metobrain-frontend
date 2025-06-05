@@ -30,7 +30,8 @@ Y luego genera una frase de Ikigai inspiradora.`;
         temperature: 0.8
       }, {
         headers: {
-          Authorization: `Bearer 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`,
+          Authorization: `Bearer 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
+`,
           "Content-Type": "application/json"
         }
       });

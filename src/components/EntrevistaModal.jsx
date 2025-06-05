@@ -67,7 +67,8 @@ export default function EntrevistaModal({ proyectoId, onClose }) {
         temperature: 0.7
       }, {
         headers: {
-          Authorization: `Bearer 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`,
+          Authorization: `Bearer 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
+`,
           "Content-Type": "application/json"
         }
       });

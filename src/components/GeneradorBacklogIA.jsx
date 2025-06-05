@@ -37,7 +37,8 @@ Genera ítems del backlog en formato: "Como usuario quiero... para..."`;
         temperature: 0.7
       }, {
         headers: {
-          Authorization: `Bearer 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`,
+          Authorization: `Bearer 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
+`,
           "Content-Type": "application/json"
         }
       });
