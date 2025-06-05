@@ -17,7 +17,7 @@ export default function MapaEmpatiaModal({ proyectoId, onClose }) {
   useEffect(() => {
     const cargarReflexion = async () => {
       try {
-        const res = await api.get(`/reflexiones/proyecto/${proyectoId}`);
+        const res = await api.get(`/api/reflexiones/proyecto/${proyectoId}`);
         const reflexion = res.data[0];
         if (reflexion) {
           setReflexionId(reflexion.id);
@@ -53,7 +53,7 @@ export default function MapaEmpatiaModal({ proyectoId, onClose }) {
     `;
 
     try {
-      const res = await api.put(`/reflexiones/${reflexionId}`, {
+      const res = await api.put(`/api/reflexiones/${reflexionId}`, {
         mapaEmpatia: textoMapa
       });
       alert("🧠 Mapa de empatía guardado exitosamente.");

@@ -65,7 +65,7 @@ Y luego genera una frase de Ikigai inspiradora.`;
   console.log("📤 Enviando reflexión:", payload);
 
   try {
-    await api.post("/reflexiones", payload);
+    await api.post("/api/reflexiones", payload);
     setGuardado(true);
     onSaved();
   } catch (error) {

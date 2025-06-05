@@ -15,10 +15,10 @@ export default function PhaseThreeIdeas({ proyectoId }) {
 
     const cargarDatos = async () => {
       try {
-        const resHistorias = await api.get(`/backlog/proyecto/${proyectoId}`);
+        const resHistorias = await api.get(`/api/backlog/proyecto/${proyectoId}`);
         setHistorias(resHistorias.data);
 
-        const resSprint = await api.get(`/sprint-backlog/proyecto/${proyectoId}`);
+        const resSprint = await api.get(`/api/sprint-backlog/proyecto/${proyectoId}`);
         setSprintBacklog(resSprint.data);
       } catch (err) {
         console.error("Error al cargar datos:", err);
@@ -32,7 +32,7 @@ export default function PhaseThreeIdeas({ proyectoId }) {
     if (!proyectoId) return;
 
     try {
-      const resumen = await api.get(`/reflexiones/proyecto/${proyectoId}`);
+      const resumen = await api.get(`/api/reflexiones/proyecto/${proyectoId}`);
       const reflexion = resumen.data[0];
       const prompt = `
 Ikigai:\n${reflexion.ikigai}\n
@@ -93,7 +93,7 @@ Genera una lista de ideas/funcionalidades para el Sprint Backlog, en formato: "C
         const descripcion = ideasIA[idx];
         const prioridadMoscow = prioridades[idx];
 
-        const res = await api.post("/sprint-backlog", {
+        const res = await api.post("/api/sprint-backlog", {
           descripcion,
           prioridadMoscow,
           estado: "Por hacer",
@@ -114,7 +114,7 @@ Genera una lista de ideas/funcionalidades para el Sprint Backlog, en formato: "C
 
   const eliminarSprintItem = async (id) => {
     try {
-      await api.delete(`/sprint-backlog/${id}`);
+      await api.delete(`/api/sprint-backlog/${id}`);
       setSprintBacklog((prev) => prev.filter((item) => item.id !== id));
     } catch (err) {
       console.error("Error eliminando ítem:", err);

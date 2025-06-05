@@ -19,7 +19,7 @@ export default function PhaseTwoBacklog({ proyectoId }) {
 
   useEffect(() => {
     if (proyectoId) {
-      api.get(`/backlog/proyecto/${proyectoId}`).then((res) => {
+      api.get(`/api/backlog/proyecto/${proyectoId}`).then((res) => {
         setTareas(res.data);
       });
     }
@@ -28,7 +28,7 @@ export default function PhaseTwoBacklog({ proyectoId }) {
   const agregarTarea = async () => {
     if (!nuevaTarea.trim() || !prioridad) return;
     try {
-      await api.post("/backlog", {
+      await api.post("/api/backlog", {
         descripcion: nuevaTarea,
         prioridad,
         storyPoints: storyPoints ? parseInt(storyPoints) : null,
@@ -38,7 +38,7 @@ export default function PhaseTwoBacklog({ proyectoId }) {
         proyecto: { id: proyectoId },
       });
 
-      const res = await api.get(`/backlog/proyecto/${proyectoId}`);
+      const res = await api.get(`/api/backlog/proyecto/${proyectoId}`);
       setTareas(res.data);
 
       setNuevaTarea("");
@@ -54,7 +54,7 @@ export default function PhaseTwoBacklog({ proyectoId }) {
 
   const eliminarTarea = async (id) => {
     try {
-      await api.delete(`/backlog/${id}`);
+      await api.delete(`/api/backlog/${id}`);
       setTareas(tareas.filter((t) => t.id !== id));
     } catch (err) {
       console.error("Error al eliminar tarea:", err);
@@ -63,7 +63,7 @@ export default function PhaseTwoBacklog({ proyectoId }) {
 
   const actualizarStoryPoints = async (id, puntos) => {
     try {
-      await api.put(`/backlog/${id}`, { storyPoints: parseInt(puntos) });
+      await api.put(`/api/backlog/${id}`, { storyPoints: parseInt(puntos) });
       setTareas((prev) =>
         prev.map((t) =>
           t.id === id ? { ...t, storyPoints: parseInt(puntos) } : t
@@ -76,7 +76,7 @@ export default function PhaseTwoBacklog({ proyectoId }) {
 
   const actualizarEstado = async (id, nuevoEstado) => {
     try {
-      await api.put(`/backlog/${id}`, { estado: nuevoEstado });
+      await api.put(`/api/backlog/${id}`, { estado: nuevoEstado });
       setTareas((prev) =>
         prev.map((t) =>
           t.id === id ? { ...t, estado: nuevoEstado } : t
@@ -89,7 +89,7 @@ export default function PhaseTwoBacklog({ proyectoId }) {
 
   const generarDesdeIA = async () => {
     try {
-      const resumen = await api.get(`/reflexiones/proyecto/${proyectoId}`);
+      const resumen = await api.get(`/api/reflexiones/proyecto/${proyectoId}`);
       const reflexion = resumen.data[0];
       const prompt = `
 Ikigai:\n${reflexion.ikigai}\n
@@ -131,7 +131,7 @@ Genera una lista de historias de usuario tipo "Como usuario quiero... para..." b
   const guardarSeleccionados = async () => {
     try {
       for (const desc of seleccionados) {
-        const res = await api.post("/backlog", {
+        const res = await api.post("/api/backlog", {
           descripcion: desc,
           prioridad: "Media",
           epica: "General",

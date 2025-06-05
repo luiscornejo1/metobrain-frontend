@@ -21,7 +21,7 @@ export default function EntrevistaModal({ proyectoId, onClose }) {
 
   const cargarEntrevistas = async () => {
     try {
-      const res = await api.get(`/entrevistas/proyecto/${proyectoId}`);
+      const res = await api.get(`/api/entrevistas/proyecto/${proyectoId}`);
       setEntrevistas(res.data);
     } catch (err) {
       console.error("Error cargando entrevistas:", err);
@@ -30,7 +30,7 @@ export default function EntrevistaModal({ proyectoId, onClose }) {
 
   const cargarReflexion = async () => {
     try {
-      const res = await api.get(`/reflexiones/proyecto/${proyectoId}`);
+      const res = await api.get(`/api/reflexiones/proyecto/${proyectoId}`);
       if (res.data.length > 0) {
         setReflexionId(res.data[0].id);
       }
@@ -42,7 +42,7 @@ export default function EntrevistaModal({ proyectoId, onClose }) {
   const guardarEntrevista = async () => {
     if (!contenido || !usuario) return;
     try {
-      await api.post("/entrevistas", {
+      await api.post("/api/entrevistas", {
         resumen: contenido,
         usuario: usuario,
         proyecto: { id: proyectoId }
@@ -98,7 +98,7 @@ export default function EntrevistaModal({ proyectoId, onClose }) {
 
     try {
       for (let descripcion of seleccionados) {
-        await api.post("/backlog", {
+        await api.post("/api/backlog", {
           descripcion,
           proyecto: { id: proyectoId }
         });
@@ -108,7 +108,7 @@ export default function EntrevistaModal({ proyectoId, onClose }) {
       const entrevistasTexto = entrevistas.map(e => `👤 ${e.usuario}: ${e.resumen}`).join("\n");
 
       // Actualizar reflexión con entrevistas
-      await api.put(`/reflexiones/${reflexionId}`, {
+      await api.put(`/api/reflexiones/${reflexionId}`, {
         entrevistas: entrevistasTexto,
         proyecto: { id: proyectoId }
       });

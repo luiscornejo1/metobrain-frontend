@@ -7,7 +7,7 @@ export default function LeadTimeChart({ proyectoId }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    api.get(`/backlog/proyecto/${proyectoId}/fechas`).then((res) => {
+    api.get(`/api/backlog/proyecto/${proyectoId}/fechas`).then((res) => {
       console.log("Datos recibidos:", res.data); // ✅ Verifica datos
       setData(res.data);
     });

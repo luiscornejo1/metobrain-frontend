@@ -7,7 +7,7 @@ export default function ResumenContextualModal({ proyectoId, onClose }) {
   useEffect(() => {
     const cargarResumen = async () => {
       try {
-        const res = await api.get(`/reflexiones/proyecto/${proyectoId}`);
+        const res = await api.get(`/api/reflexiones/proyecto/${proyectoId}`);
         setDatos(res.data[0]); // asumimos una sola reflexión por proyecto
       } catch (err) {
         console.error("Error al cargar datos de resumen:", err);

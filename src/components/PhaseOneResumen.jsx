@@ -8,7 +8,7 @@ export default function PhaseOneResumen({ proyectoId }) {
 
   useEffect(() => {
     if (!proyectoId) return;
-    api.get(`/reflexiones/proyecto/${proyectoId}`)
+    api.get(`/api/reflexiones/proyecto/${proyectoId}`)
       .then((res) => {
         if (res.data.length > 0) {
           setReflexion(res.data[0]);
@@ -36,7 +36,7 @@ export default function PhaseOneResumen({ proyectoId }) {
         entrevistas: form.entrevistas,
         mapaEmpatia: form.mapaEmpatia
       };
-      await api.put(`/reflexiones/${reflexion.id}`, updated);
+      await api.put(`/api/reflexiones/${reflexion.id}`, updated);
       setReflexion(updated);
       setEditando(false);
       alert("Reflexión actualizada ✅");

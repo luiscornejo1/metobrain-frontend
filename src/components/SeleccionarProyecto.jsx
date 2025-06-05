@@ -7,7 +7,7 @@ export default function SeleccionarProyecto({ onSeleccionado }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    api.get("/proyectos")
+    api.get("/api/proyectos")
       .then((res) => setProyectos(res.data))
       .catch((err) => {
         console.error("Error cargando proyectos:", err);

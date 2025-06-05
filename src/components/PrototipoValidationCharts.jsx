@@ -11,7 +11,7 @@ export default function PrototipoValidationCharts({ proyectoId }) {
 
     const fetchData = async () => {
       try {
-        const res = await api.get(`/prototipos/proyecto/${proyectoId}`);
+        const res = await api.get(`/api/prototipos/proyecto/${proyectoId}`);
         setPrototipos(res.data);
       } catch (err) {
         console.error("Error obteniendo datos:", err);

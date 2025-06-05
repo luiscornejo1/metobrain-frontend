@@ -10,7 +10,7 @@ export default function PhaseFiveLaunch({ proyectoId }) {
   const registrarCierre = async () => {
     if (!proyectoId) return alert("No se ha definido el proyecto.");
     try {
-      await api.post("/cierre", {
+      await api.post("/api/cierre", {
         proyecto: { id: proyectoId },
         aceptacionCliente,
         comentariosCliente,

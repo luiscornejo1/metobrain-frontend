@@ -15,10 +15,10 @@ export default function PhaseFourPrototype({ proyectoId }) {
 
     const cargarDatos = async () => {
       try {
-        const resHistorias = await api.get(`/sprint-backlog/proyecto/${proyectoId}`);
+        const resHistorias = await api.get(`/api/sprint-backlog/proyecto/${proyectoId}`);
         setHistorias(resHistorias.data);
 
-        const resPrototipos = await api.get(`/prototipos/proyecto/${proyectoId}`);
+        const resPrototipos = await api.get(`/api/prototipos/proyecto/${proyectoId}`);
         setPrototipos(resPrototipos.data);
       } catch (err) {
         console.error("Error cargando datos:", err);
@@ -32,7 +32,7 @@ export default function PhaseFourPrototype({ proyectoId }) {
     if (!nuevoNombre.trim() || !nuevoEnlace.trim() || historiasSeleccionadas.length === 0) return;
 
     try {
-      const res = await api.post("/prototipos", {
+      const res = await api.post("/api/prototipos", {
         nombre: nuevoNombre,
         enlace: nuevoEnlace,
         estadoValidacion: "Pendiente",
@@ -51,7 +51,7 @@ export default function PhaseFourPrototype({ proyectoId }) {
 
   const actualizarEstado = async (id, nuevoEstado) => {
     try {
-      const res = await api.put(`/prototipos/${id}`, { estadoValidacion: nuevoEstado });
+      const res = await api.put(`/api/prototipos/${id}`, { estadoValidacion: nuevoEstado });
       setPrototipos((prev) =>
         prev.map((p) =>
           p.id === id ? { ...p, estadoValidacion: nuevoEstado } : p

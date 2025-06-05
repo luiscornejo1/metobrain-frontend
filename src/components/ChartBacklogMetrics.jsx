@@ -10,7 +10,7 @@ export default function ChartBacklogMetrics({ proyectoId }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await api.get(`/backlog/proyecto/${proyectoId}`);
+      const res = await api.get(`/api/backlog/proyecto/${proyectoId}`);
       const tareas = res.data;
 
       const labels = tareas.map((t, index) => `HU ${index + 1}`);

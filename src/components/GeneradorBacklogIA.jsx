@@ -10,7 +10,7 @@ export default function GeneradorBacklogIA({ proyectoId }) {
   const analizar = async () => {
     setCargando(true);
     try {
-      const res = await api.get(`/reflexiones/proyecto/${proyectoId}`);
+      const res = await api.get(`/api/reflexiones/proyecto/${proyectoId}`);
       const datos = res.data[0];
 
       if (!datos) {
@@ -61,7 +61,7 @@ Genera ítems del backlog en formato: "Como usuario quiero... para..."`;
   const guardarSeleccionados = async () => {
     try {
       for (const descripcion of seleccionados) {
-        await api.post("/backlog", {
+        await api.post("/api/backlog", {
           descripcion,
           proyecto: { id: proyectoId }
         });
